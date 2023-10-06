@@ -8,15 +8,15 @@ public class Time{ //class header
    public Time(int h, int m){ //two argument constructors 
       hour = h;
       minute = m;
-      if (hour < 0) //if hour is negative it is 0
+      if (hour < 0) //if hour is negative then make hour 0
          hour = 0; 
-      if (minute < 0) //if minute is negative it is 0
+      if (minute < 0) //if minute is negative then make minute 0
          minute = 0; 
-      if (minute > 59){ //if minute is greater than 59, than adjust the hour accordingly
+      if (minute > 59){ //if minute is greater than 59, then make it 
          hour += minute/60;
          minute = minute%60;
          }
-      if (hour > 23) //if hour is greater than 23, it takes the remainder of 24, which becomes the hour
+      if (hour > 23) //if hour is greater than 23 then it will take the remainder of 24 and that will be the new hour
         hour = hour%24;
   }
    
@@ -24,26 +24,35 @@ public class Time{ //class header
       this(0,0);
    
    }
-   public String toString(){
+   public String toString(){ //military time
       String ans="";
-      if (hour < 10) //if hour is greater than 24, it will add a zero to the beginning
+      if (hour < 10) //adding 0 infront of hour time
       ans+="0";
       ans+=hour;
-      if (minute < 10) //if minute is less than 10, it will add a zero before the minute value
+      if (minute < 10) //adding 0 infront of minute time
       ans+="0";
       ans+=minute;
       return ans;
    }
-   public String convert(){
+   public String convert(){ //converting military time to 12 hour time
       String ans="";
       String x="";
-      if (hour == 24 || hour < 12) //if the time is 2400 or less than 1200, the time labels as "am"
+      if (hour == 0){ //Midnight
+         ans="12";
+         x = "am";
+      }
+      else if (hour == 24 || hour < 12){
+         x = "am";}
+         else {
+            x = "pm";
+         }
+      if (hour == 24 || hour < 12) //if the time is 2400 or less than 1200 the time will be AM
          x="am";
-      if (hour >= 12) //if the time is >=1200, the time labels as "pm"
+      if (hour >= 12) //if the time is less than or equal to 1200, the time will be pm
          x="pm"; 
       ans+=hour%12; //converts military time to normal time
-      ans+=":"; //adds the ":" that is depicted in normal time
-      if (minute < 10) //adds a zero before the minute value if the minute is less than 10
+      ans+=":"; //adds : for normal time stuff
+      if (minute < 10) //adding 0 infront of minute time
          ans+="0";
       ans+=minute;
       ans+=x;
@@ -53,7 +62,6 @@ public class Time{ //class header
    public void increment(int m){
       if (m>0) // if the m value is negative, it returns the minute; if the m value is greater than 0, it adds that increment to the minutes
          minute+=m;
-         else minute=minute;
       if (minute>59) //this adjusts the time if the minute value is greater than 59; the remaining time gets added to the hour
          hour+=minute/60;
          minute=minute%60;
